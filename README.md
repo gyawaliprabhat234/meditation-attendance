@@ -1,1 +1,3 @@
 # meditation-attendance
+
+Example
