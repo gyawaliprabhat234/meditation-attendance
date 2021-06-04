@@ -1,14 +1,16 @@
 package cs.miu.edu.mediatationattendance.controller;
 
-import cs.miu.edu.mediatationattendance.jwt.JwtRequest;
-import cs.miu.edu.mediatationattendance.jwt.JwtResponse;
-import cs.miu.edu.mediatationattendance.service.UserService;
-import cs.miu.edu.mediatationattendance.utility.JWTUtility;
+import cs.miu.edu.mediatationattendance.jwt.JwtAuthenticationResponse;
+import cs.miu.edu.mediatationattendance.jwt.LoginRequest;
+import cs.miu.edu.mediatationattendance.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,41 +18,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HomeController {
-
-    @Autowired
-    private JWTUtility jwtUtility;
-
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UserService userService;
+    private JwtTokenProvider tokenProvider;
 
     @GetMapping("/")
     public String home() {
         return "Welcome to home page!!";
     }
 
-    @PostMapping("/authenticate")
-    public JwtResponse authenticate(@RequestBody JwtRequest jwtRequest) throws Exception{
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) throws Exception {
 
         try {
-            authenticationManager.authenticate(
+            Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            jwtRequest.getUsername(),
-                            jwtRequest.getPassword()
+                            loginRequest.getUsernameOrEmail(),
+                            loginRequest.getPassword()
                     )
             );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            String jwt = tokenProvider.generateToken(authentication);
+            return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
         } catch (BadCredentialsException e) {
             throw new Exception("INVALID_CREDENTIALS", e);
         }
-
-        final UserDetails userDetails
-                = userService.loadUserByUsername(jwtRequest.getUsername());
-
-        final String token =
-                jwtUtility.generateToken(userDetails);
-
-        return  new JwtResponse(token);
     }
 }

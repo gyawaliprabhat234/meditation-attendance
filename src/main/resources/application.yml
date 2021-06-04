@@ -1,5 +1,6 @@
 jwt:
     secret: secretKey123
+    jwtExpirationInMs: 300000
 spring:
   application:
     name: meditation-attendance

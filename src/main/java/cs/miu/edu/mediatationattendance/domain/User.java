@@ -2,6 +2,7 @@ package cs.miu.edu.mediatationattendance.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,12 +25,9 @@ public abstract class User {
     private String lastName;
     private String emailAddress;
     private String userName;
+    private String password;
 
     @OneToMany
     @JoinColumn(name = "user_id")
     private Set<Role> role = new HashSet<>();
-
-//    public User(Role role) {
-//        this.role.add(role);
-//    }
 }
