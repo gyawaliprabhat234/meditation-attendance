@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Faculty extends User{
 	private String title;
-
 }

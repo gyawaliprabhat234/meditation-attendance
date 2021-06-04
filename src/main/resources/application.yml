@@ -1,3 +1,5 @@
+jwt:
+    secret: secretKey123
 spring:
   application:
     name: meditation-attendance
@@ -9,6 +11,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
+      ddl-auto: create
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
