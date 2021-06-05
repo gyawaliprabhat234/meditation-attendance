@@ -1,6 +1,5 @@
 package cs.miu.edu.mediatationattendance.domain;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.*;
