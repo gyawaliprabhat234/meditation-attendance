@@ -1,8 +1,6 @@
 server:
   port: 8081
 spring:
-  application:
-    name: sample-springdata-service
   datasource:
     url: jdbc:mysql://localhost/meditationattendance
     username: root

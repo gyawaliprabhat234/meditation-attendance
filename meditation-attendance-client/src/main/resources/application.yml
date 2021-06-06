@@ -5,3 +5,8 @@ spring:
     name: spring-boot-20-client
     
 spring-boot-server.name: meditation-attendance-server
+
+
+basicAuthenConfig:
+  username: username
+  password: password

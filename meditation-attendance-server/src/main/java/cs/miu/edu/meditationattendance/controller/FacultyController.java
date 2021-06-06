@@ -13,4 +13,9 @@ public class FacultyController {
     public String faculty() {
         return "Welcome to home page1111!!";
     }
+
+    @GetMapping("/basic")
+    public String basic() {
+        return "Welcome to home page1111!!";
+    }
 }
