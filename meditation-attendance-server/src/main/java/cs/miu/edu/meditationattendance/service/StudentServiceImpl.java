@@ -5,10 +5,12 @@ import cs.miu.edu.meditationattendance.dto.CourseDto;
 import cs.miu.edu.meditationattendance.repository.AttendanceRepository;
 import cs.miu.edu.meditationattendance.repository.CourseOfferingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class StudentServiceImpl implements StudentService {
 
     @Autowired

@@ -1,6 +1,6 @@
 jwt:
-    secret: secretKey123
-    jwtExpirationInMs: 300000
+  secret: secretKey123
+  jwtExpirationInMs: 300000
 spring:
   application:
     name: meditation-attendance
@@ -18,4 +18,4 @@ spring:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.SQLServer2008Dialect
+        dialect: org.hibernae.dialect.SQLServer2008Dialect

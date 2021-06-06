@@ -1,13 +1,13 @@
 package cs.miu.edu.meditationattendance.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 public class AttendanceDto {
     private String barCode;
+
 }
+
 

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface StudentService {
      List<CourseDto> getCourses(Long studentId);
      List<AttendanceDto> getAttendance(Long studentId);
