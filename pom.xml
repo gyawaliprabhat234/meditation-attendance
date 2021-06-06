@@ -26,6 +26,8 @@
 
 	<modules>
 		<module>meditation-attendance-server</module>
+		<module>meditation-attendance-client</module>
+		<module>meditation-attendance-registry</module>
 	</modules>
 
 	<dependencyManagement>

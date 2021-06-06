@@ -3,7 +3,7 @@ jwt:
     jwtExpirationInMs: 300000
 spring:
   application:
-    name: meditation-attendance
+    name: meditation-attendance-server
   datasource:
     url: jdbc:sqlserver://localhost:1433;databaseName=meditationattendance;integratedSecurity=true;
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
