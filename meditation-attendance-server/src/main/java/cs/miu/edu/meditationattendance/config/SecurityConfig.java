@@ -91,22 +91,22 @@ public class SecurityConfig{
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-//			http.csrf()
-//					.and()
-//					.exceptionHandling()
-//					.authenticationEntryPoint(unauthorizedHandler)
-//					.and()
-//					.sessionManagement()
-//					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//					.and()
-//					.authorizeRequests()
-//					.antMatchers("/login")
-//					.permitAll()
-//					.and()
-//					.authorizeRequests()
-//					.anyRequest()
-//					.authenticated();
-//			http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+			http.csrf()
+					.and()
+					.exceptionHandling()
+					.authenticationEntryPoint(unauthorizedHandler)
+					.and()
+					.sessionManagement()
+					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+					.and()
+					.authorizeRequests()
+					.antMatchers("/login")
+					.permitAll()
+					.and()
+					.authorizeRequests()
+					.anyRequest()
+					.authenticated();
+			http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 		}
 	}
 }
