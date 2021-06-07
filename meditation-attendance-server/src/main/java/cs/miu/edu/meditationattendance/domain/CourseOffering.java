@@ -1,6 +1,7 @@
 package cs.miu.edu.meditationattendance.domain;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -26,6 +27,9 @@ public class CourseOffering {
 	@ManyToOne
 	@JoinColumn(name="course_id")
 	private Course course;
+	
+	@OneToMany(mappedBy="courseOffering")
+	private List<ClassSession> listClassSessions;
 
 	public CourseOffering(Course course){
 		this.course = course;
