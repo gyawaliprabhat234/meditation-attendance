@@ -1,25 +1,25 @@
-server:
-  port: 8081
 jwt:
     secret: secretKey123
     jwtExpirationInMs: 300000
 spring:
+  application:
+    name: meditation-attendance-server
   datasource:
-    url: jdbc:mysql://localhost/meditationattendance
-    username: root
-    password: foodhub
-    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:sqlserver://localhost:1433;databaseName=meditationattendance;integratedSecurity=true;
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    hikari:
+      maximumPoolSize: 10
   jpa:
     show-sql: true
-    hibernate.ddl-auto: create-drop
     hibernate:
+      ddl-auto: create
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        
+        dialect: org.hibernate.dialect.SQLServer2008Dialect
+
 basicAuthenConfig:
   urlPattern: /faculty/basic
   username: username
