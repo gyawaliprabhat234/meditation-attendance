@@ -19,3 +19,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+        
+basicAuthenConfig:
+  urlPattern: /faculty/basic
+  username: username
+  password: password
