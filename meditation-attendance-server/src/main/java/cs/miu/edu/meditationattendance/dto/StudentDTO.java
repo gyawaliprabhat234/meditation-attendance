@@ -8,10 +8,12 @@ import java.time.LocalDateTime;
 public class StudentDTO {
     private String studentId;
     private String id;
-    private String studentName;
+    private String firstName;
+    private String lastName;
     private String currentCourse;
     private Long barcode;
     private String status;
     private LocalDateTime entryDateTime;
     private String emailAddress;
+    private String userName;
 }
