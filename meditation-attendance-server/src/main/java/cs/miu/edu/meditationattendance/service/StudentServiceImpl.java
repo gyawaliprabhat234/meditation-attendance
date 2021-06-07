@@ -72,7 +72,8 @@ public class StudentServiceImpl implements StudentService{
     private StudentDTO mapToStudentDTO(Student student){
         StudentDTO studentDTO = new StudentDTO();
         studentDTO.setStudentId(student.getStudentId());
-        studentDTO.setStudentName(student.getFirstName() + student.getLastName());
+        studentDTO.setFirstName(student.getFirstName());
+        studentDTO.setLastName(student.getLastName());
         studentDTO.setStatus(student.getStatus());
         studentDTO.setEmailAddress(student.getEmailAddress());
         studentDTO.setEntryDateTime(student.getEntryDateTime());

@@ -11,6 +11,6 @@ import lombok.Setter;
 public class ClassSessionDto {
 	
 	private TimeSlot timeSlot;
-	private List<AttendanceDto> attendance;
+	private List<AttendanceDTO> attendance;
 
 }

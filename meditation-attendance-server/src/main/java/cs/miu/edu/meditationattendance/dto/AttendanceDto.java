@@ -17,13 +17,16 @@ public class AttendanceDTO {
     private Long id;
     private String studentId;
     private String studentName;
+    private String firstName;
+    private String lastName;
     private String courseName;
     private LocalDate courseStartDate;
     private LocalDate courseEndDate;
     private String timeSlotCode;
     private String timeSlotCodeDescription;
     private Long sessionId;
-    private LocalDateTime barCodeScanTime;
+    private LocalDateTime timeStamp;
+    private String emailAddress;
     private String buildingName;
     private Long barCode;
 }

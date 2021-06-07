@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cs.miu.edu.meditationattendance.dto.ClassDto;
-import cs.miu.edu.meditationattendance.dto.CourseDto;
+import cs.miu.edu.meditationattendance.dto.ClassDTO;
+import cs.miu.edu.meditationattendance.dto.CourseDTO;
 import cs.miu.edu.meditationattendance.service.CourseService;
 
 @RestController
@@ -31,12 +31,12 @@ public class FacultyController {
     }
 
     @GetMapping("/courses")
-    public List<CourseDto> getCoursesPastSixMoths() throws Exception{
+    public List<CourseDTO> getCoursesPastSixMoths() throws Exception{
     	return courseService.coursesPastSixMonths();
     }
 
     @GetMapping("/courses/attendance")
-    public List<ClassDto> coursesWithAttendance() throws Exception{
+    public List<ClassDTO> coursesWithAttendance() throws Exception{
     	return courseService.coursesWithAttendance();
     }
 }

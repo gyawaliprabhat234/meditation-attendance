@@ -67,7 +67,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         Optional<Attendance> attendance = attendanceRepo.findById(attendanceDTO.getId());
         if(!attendance.isPresent())
             throw new ResourceNotFoundException("Attendance not found with id("+ attendanceDTO.getId()+")");
-        attendance.get().setTimeStamp(attendanceDTO.getBarCodeScanTime());
+        attendance.get().setTimeStamp(attendanceDTO.getTimeStamp());
 
         //If class Session is not changed then return the attendence to user
         if (attendance.get().getClassSession().getSessionId().equals(attendanceDTO.getSessionId())) {
@@ -91,7 +91,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         if(!classSession.isPresent())
             throw new ResourceNotFoundException("Class session is not found");
         attendance.setClassSession(classSession.get());
-        attendance.setTimeStamp(attendanceDTO.getBarCodeScanTime());
+        attendance.setTimeStamp(attendanceDTO.getTimeStamp());
         attendance.setStudent(student.get());
         return attendance;
     }
@@ -105,7 +105,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         attendanceDTO.setStudentId(student.getStudentId());
         attendanceDTO.setStudentName(student.getFirstName() + " " + student.getLastName());
         attendanceDTO.setBarCode(student.getBarcode());
-        attendanceDTO.setBarCodeScanTime(attendance.getTimeStamp());
+        attendanceDTO.setTimeStamp(attendance.getTimeStamp());
         attendanceDTO.setTimeSlotCode(attendance.getClassSession().getTimeslot().getCode());
         attendanceDTO.setCourseEndDate(courseOffering.getEndDate());
         attendanceDTO.setCourseStartDate(courseOffering.getStartDate());
