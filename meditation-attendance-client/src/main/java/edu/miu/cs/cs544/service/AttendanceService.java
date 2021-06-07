@@ -28,7 +28,6 @@ public class AttendanceService {
 
 	private String getBaseServiceUrl() {
 		List<ServiceInstance> serviceInstances = discoveryClient.getInstances(serverName);
-		serviceInstances.forEach(System.out::println);
 		return serviceInstances.get(0).getUri().toString();
 	}
 }
