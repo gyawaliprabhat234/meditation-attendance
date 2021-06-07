@@ -21,7 +21,7 @@ public class Attendance {
 	@GeneratedValue
 	private Long id;
 
-	private String barCode;
+	private Long barCode;
 	private LocalDateTime timeStamp;
 
 	@ManyToOne
@@ -31,5 +31,4 @@ public class Attendance {
 	@ManyToOne
 	@JoinColumn(name="student_id")
 	private Student student;
-	
 }

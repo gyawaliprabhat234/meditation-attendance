@@ -1,6 +1,7 @@
 package cs.miu.edu.meditationattendance.domain;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,8 +21,8 @@ public class TimeSlot {
 	@GeneratedValue
 	private Integer id;
 	private String code;
-	private LocalDateTime startTime;
-	private LocalDateTime endTime;
+	private LocalTime startTime;
+	private LocalTime endTime;
 	
 
 }

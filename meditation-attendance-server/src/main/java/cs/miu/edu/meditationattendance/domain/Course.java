@@ -17,7 +17,8 @@ public class Course {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String coureNumber;
+	@Column(length=10, unique = true)
+	private String courseNumber;
 	private String name;
 
 	@Column(length= 4000)
