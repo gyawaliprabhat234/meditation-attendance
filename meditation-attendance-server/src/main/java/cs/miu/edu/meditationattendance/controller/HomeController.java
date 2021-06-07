@@ -1,5 +1,6 @@
 package cs.miu.edu.meditationattendance.controller;
 
+import cs.miu.edu.meditationattendance.dummydata.DummyData;
 import cs.miu.edu.meditationattendance.jwt.JwtAuthenticationResponse;
 import cs.miu.edu.meditationattendance.jwt.LoginRequest;
 import cs.miu.edu.meditationattendance.security.JwtTokenProvider;
@@ -23,14 +24,18 @@ public class HomeController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
+
     @GetMapping("/")
     public String home() {
+       // DummyData dummyData = new DummyData();
         return "Welcome to home page!!";
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) throws Exception {
 
+        System.out.println("Input Username : "+ loginRequest.getUsernameOrEmail());
+        System.out.println("Input Passwrod : "+ loginRequest.getPassword());
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import cs.miu.edu.meditationattendance.dto.AttendanceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,9 @@ import cs.miu.edu.meditationattendance.domain.Attendance;
 import cs.miu.edu.meditationattendance.domain.ClassSession;
 import cs.miu.edu.meditationattendance.domain.Course;
 import cs.miu.edu.meditationattendance.domain.CourseOffering;
-import cs.miu.edu.meditationattendance.dto.AttendanceDto;
-import cs.miu.edu.meditationattendance.dto.ClassDto;
+import cs.miu.edu.meditationattendance.dto.ClassDTO;
 import cs.miu.edu.meditationattendance.dto.ClassSessionDto;
-import cs.miu.edu.meditationattendance.dto.CourseDto;
-import cs.miu.edu.meditationattendance.dto.StudentDto;
+import cs.miu.edu.meditationattendance.dto.CourseDTO;
 import cs.miu.edu.meditationattendance.repository.CourseOfferingRepository;
 import cs.miu.edu.meditationattendance.repository.CourseRepository;
 
@@ -31,33 +30,33 @@ public class CourseServiceImpl implements CourseService {
 	private CourseOfferingRepository courseOfferingRepository;
 
 	@Transactional
-	public List<CourseDto> coursesPastSixMonths() throws Exception {
+	public List<CourseDTO> coursesPastSixMonths() throws Exception {
 		try {
 			LocalDate date = LocalDate.now().minusMonths(6);
 			List<Course> courses = courseRepository.coursesPastSixMonths(date);
-			List<CourseDto> coursesDto = convertCoursesDto(courses);
+			List<CourseDTO> coursesDto = convertCoursesDto(courses);
 			return coursesDto;
 		} catch (Exception e) {
 			throw new Exception("Exception: " + e);
 		}
 	}
 
-	public List<ClassDto> coursesWithAttendance() throws Exception {
+	public List<ClassDTO> coursesWithAttendance() throws Exception {
 		try {
 			List<CourseOffering> coursesOffering = courseOfferingRepository.coursesWithAttendance();
-			List<ClassDto> classesDto = convertClassDto(coursesOffering);
+			List<ClassDTO> classesDto = convertClassDto(coursesOffering);
 			return classesDto;
 		} catch (Exception e) {
 			throw new Exception("Exception: " + e);
 		}
 	}
 
-	public List<CourseDto> convertCoursesDto(List<Course> courses) {
-		List<CourseDto> coursesDto = new ArrayList<CourseDto>();
-		CourseDto courseObj;
+	public List<CourseDTO> convertCoursesDto(List<Course> courses) {
+		List<CourseDTO> coursesDto = new ArrayList<CourseDTO>();
+		CourseDTO courseObj;
 		for (Course course : courses) {
-			courseObj = new CourseDto();
-			courseObj.setCourseNumber(course.getCoureNumber());
+			courseObj = new CourseDTO();
+			courseObj.setCourseNumber(course.getCourseNumber());
 			courseObj.setName(course.getName());
 			courseObj.setDescription(course.getDescription());
 			coursesDto.add(courseObj);
@@ -65,33 +64,31 @@ public class CourseServiceImpl implements CourseService {
 		return coursesDto;
 	}
 
-	private List<ClassDto> convertClassDto(List<CourseOffering> coursesOffering) {
-		List<ClassDto> classesDto = new ArrayList<ClassDto>();
-		ClassDto classObj;
+	private List<ClassDTO> convertClassDto(List<CourseOffering> coursesOffering) {
+		List<ClassDTO> classesDto = new ArrayList<ClassDTO>();
+		ClassDTO classObj;
 		for (CourseOffering courseOffering : coursesOffering) {
-			classObj = new ClassDto();
+			classObj = new ClassDTO();
 			classObj.setCourseName(courseOffering.getCourse().getName());
 			List<ClassSessionDto> classSessions = new ArrayList<ClassSessionDto>();
 			ClassSessionDto classSessionObj;
 			for (ClassSession classSession : courseOffering.getListClassSessions()) {
 				classSessionObj = new ClassSessionDto();
 				classSessionObj.setTimeSlot(classSession.getTimeslot());
-				List<AttendanceDto> attendances = new ArrayList<AttendanceDto>();
-				AttendanceDto attendanceObj;
+				List<AttendanceDTO> attendances = new ArrayList<AttendanceDTO>();
+				AttendanceDTO attendanceObj;
 				for (Attendance attendance : classSession.getAttendances()) {
-					attendanceObj = new AttendanceDto();
+					attendanceObj = new AttendanceDTO();
 					attendanceObj.setTimeStamp(attendance.getTimeStamp());
-					StudentDto studentDto = new StudentDto();
-					studentDto.setBarcode(attendance.getStudent().getBarcode());
-					studentDto.setEmailAddress(attendance.getStudent().getEmailAddress());
-					studentDto.setEntryDateTime(attendance.getStudent().getEntryDateTime());
-					attendances.add(attendanceObj);
-					studentDto.setFirstName(attendance.getStudent().getFirstName());
-					studentDto.setLastName(attendance.getStudent().getLastName());
-					studentDto.setStatus(attendance.getStudent().getStatus());
-					studentDto.setStudentId(attendance.getStudent().getStudentId());
-					studentDto.setUserName(attendance.getStudent().getUserName());
-					attendanceObj.setStudent(studentDto);
+					attendanceObj.setBarCode(attendance.getStudent().getBarcode());
+					attendanceObj.setEmailAddress(attendance.getStudent().getEmailAddress());
+//					attendanceObj.setEntryDateTime(attendance.getStudent().getEntryDateTime());
+					attendanceObj.setFirstName(attendance.getStudent().getFirstName());
+					attendanceObj.setLastName(attendance.getStudent().getLastName());
+					//attendanceObj.setStatus(attendance.getStudent().getStatus());
+					attendanceObj.setStudentId(attendance.getStudent().getStudentId());
+					//attendanceObj.setUserName(attendance.getStudent().getUserName());
+					//attendanceObj.setStudent(studentDto);
 				}
 				classSessionObj.setAttendance(attendances);
 				classSessions.add(classSessionObj);

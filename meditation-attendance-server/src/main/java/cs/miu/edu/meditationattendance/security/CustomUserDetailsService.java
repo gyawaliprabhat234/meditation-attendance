@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +49,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         HashSet<Role> roles = new HashSet<>();
         roles.add(new Role(1L, "FACULTY", "ALL"));
         User user = new Faculty("title", "firstname", "lastname",
-                "mail@mai.com", "u","$2y$12$10d6LKAbLIevksEjwuO67.Fxuf995baxeCnAfiQ.gNfl74bIkjGIy", roles);
+                "mail@mai.com", "admin",new BCryptPasswordEncoder().encode("password"), roles);
         return user;
     }
 }

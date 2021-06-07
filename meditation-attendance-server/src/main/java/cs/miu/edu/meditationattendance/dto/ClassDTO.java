@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ClassDto {
+public class ClassDTO {
 	
 	private String courseName;
 	private List<ClassSessionDto> classSessions;

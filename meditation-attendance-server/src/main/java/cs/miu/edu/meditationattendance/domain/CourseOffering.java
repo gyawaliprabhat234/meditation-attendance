@@ -31,6 +31,10 @@ public class CourseOffering {
 	@OneToMany(mappedBy="courseOffering")
 	private List<ClassSession> listClassSessions;
 
+	//Added
+	@OneToMany(mappedBy="courseOffering" , fetch = FetchType.LAZY)
+	private List<ClassSession> sessions;
+
 	public CourseOffering(Course course){
 		this.course = course;
 	}

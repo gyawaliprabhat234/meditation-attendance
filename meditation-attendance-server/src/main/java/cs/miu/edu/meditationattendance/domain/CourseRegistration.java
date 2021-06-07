@@ -1,6 +1,7 @@
 package cs.miu.edu.meditationattendance.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -24,7 +25,7 @@ public class CourseRegistration {
 	private Student student;
 
 	@ManyToOne
-	@JoinColumn(name="course_id")
+	@JoinColumn(name="offering_id")
 	private CourseOffering courseOffering;
 
 }

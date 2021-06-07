@@ -7,6 +7,9 @@ import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+
 @Data
 @Entity
 @AllArgsConstructor
@@ -21,18 +24,18 @@ public class ClassSession {
 	@JoinColumn(name="location_id")
 	private Location location;
 
+	private LocalDate date;
 	@ManyToOne
 	@JoinColumn(name="timeslot_id")
 	private TimeSlot timeslot;
 	
+	//I think student to be here.
 	@ManyToOne
-	@JoinColumn(name="courseofering_id")
+	@JoinColumn(name="offering_id")
 	private CourseOffering courseOffering;
-	
+
 	@OneToMany(mappedBy="classSession")
 	private List<Attendance> attendances;
-	
-	//I think student to be here.
-	
+
 
 }

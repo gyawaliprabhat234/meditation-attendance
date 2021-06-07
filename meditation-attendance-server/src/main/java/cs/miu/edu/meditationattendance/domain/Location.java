@@ -16,6 +16,7 @@ public class Location {
     @GeneratedValue
     private Integer locationId;
     private String buildingName;
+    private String roomName;
     @Column(length = 4000)
     private String description;
 }

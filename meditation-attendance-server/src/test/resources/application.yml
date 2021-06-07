@@ -1,0 +1,19 @@
+
+spring:
+  application:
+    name: meditation-attendance
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=meditationattendance_test;integratedSecurity=true;
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    hikari:
+      maximumPoolSize: 10
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServer2008Dialect
