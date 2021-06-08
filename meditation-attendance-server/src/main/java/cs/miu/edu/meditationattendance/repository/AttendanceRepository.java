@@ -16,4 +16,9 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
     @Query("select a from Attendance a where a.student.studentId = ?1")
     List<Attendance> findAllAttendanceByStudentId(String id);
+
+    @Query("select attendance from Attendance attendance " +
+            "where attendance.classSession.courseOffering.course.courseNumber = ?1 " +
+            "and attendance.student.studentId = ?2 ")
+    List<Attendance> findAllAttendanceByCourseNumber(String courseNumber, String studentId);
 }

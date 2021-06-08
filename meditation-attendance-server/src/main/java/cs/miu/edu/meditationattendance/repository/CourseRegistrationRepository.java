@@ -24,4 +24,12 @@ public interface CourseRegistrationRepository extends JpaRepository<CourseRegist
                     "and co.startDate <= ?2 " +
                     "and co.endDate >= ?2")
     Optional<Course> findCurrentCourseByStudentId(String studentId, LocalDate date);
+
+    @Query("select course from CourseRegistration cr " +
+    "inner join cr.courseOffering co " +
+    "inner join co.course course " +
+
+    "where cr.student.studentId = ?1")
+//    @Query("select distinct co.course from CourseRegistration cr join cr.courseOffering co where cr.student.studentId = ?1")
+    Optional<Course> findCoursesByStudentId(String studentId);
 }
