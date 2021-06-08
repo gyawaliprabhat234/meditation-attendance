@@ -3,6 +3,7 @@ package cs.miu.edu.meditationattendance.dummydata;
 import cs.miu.edu.meditationattendance.domain.*;
 import cs.miu.edu.meditationattendance.repository.*;
 import org.hibernate.Session;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -15,12 +16,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.HashSet;
 
 @Transactional
 @Component
 public class DummyData {
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private AdminRepository adminRepository;
 
     @Autowired
     private TimeSlotRepository timeSlotRepository;
@@ -48,6 +53,8 @@ public class DummyData {
 
 
     public void  createDummyData(){
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
         TimeSlot timeSlot = new TimeSlot();
         timeSlot.setCode("AM");
         timeSlot.setStartTime(LocalTime.of(10, 0));
@@ -94,13 +101,24 @@ public class DummyData {
         eaOffering.setSessions(Arrays.asList(session, session2));
         courseOfferingRepository.save(eaOffering);
 
+        Administrator administrator = new Administrator();
+        HashSet<Role> role = createRole("ADMIN");
+        administrator.setRole(role);
+        administrator.setUserName("admin");
+        administrator.setPassword(bCryptPasswordEncoder.encode("password"));
+        administrator.setFirstName("Admin");
+        administrator.setLastName("Lastname");
+        adminRepository.save(administrator);
+
+        administrator.setRole(role);
         Student student = new Student();
         student.setFirstName("Prabhat");
         student.setLastName("Gyawali");
         student.setStudentId("611941");
         student.setBarcode(611941l);
         student.setUserName("student");
-        student.setPassword(new BCryptPasswordEncoder().encode("password"));
+        student.setRole(createRole("STUDENT"));
+        student.setPassword(bCryptPasswordEncoder.encode("password"));
         studentRepository.save(student);
 
         CourseRegistration registration = new CourseRegistration();
@@ -121,5 +139,14 @@ public class DummyData {
         attendance2.setClassSession(session2);
         attendanceRepository.save(attendance2);
 
+    }
+
+    @NotNull
+    private HashSet<Role> createRole(String...roles) {
+        HashSet<Role> roleMap = new HashSet<>();
+        for (String role : roles){
+            roleMap.add(new Role(role));
+        }
+        return roleMap;
     }
 }

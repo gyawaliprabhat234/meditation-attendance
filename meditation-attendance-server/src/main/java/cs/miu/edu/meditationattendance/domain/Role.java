@@ -19,8 +19,8 @@ public class Role {
     @GeneratedValue
     private Long id;
     private String name;
-   // private List<String> permission = new ArrayList<>();
-    private String permission;
-    //need to be added roles or which function can he access.
 
+    public Role(String role) {
+        this.name = role;
+    }
 }
