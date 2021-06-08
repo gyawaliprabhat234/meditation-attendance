@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CourseOfferingRepository extends JpaRepository<CourseOffering, Long> {
 
-	@Query("select co from CourseOffering co")
-	public List<CourseOffering> coursesWithAttendance();
+	@Query("select co from CourseOffering co where co.faculty.id = ?1")
+	public List<CourseOffering> coursesWithAttendance(Long idFaculty);
 
 }

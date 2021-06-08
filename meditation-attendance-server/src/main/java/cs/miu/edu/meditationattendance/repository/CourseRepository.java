@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface CourseRepository extends CrudRepository<Course, Long> {
 
 	@Query("select distinct c from Course c where c.id in (select co.id from "
-			+ "CourseOffering co where co.startDate >= ?1)")
-	public List<Course> coursesPastSixMonths(LocalDate date);
+			+ "CourseOffering co where co.startDate >= ?1 and co.faculty.id = ?2)")
+	public List<Course> coursesPastSixMonths(LocalDate date, Long idFaculty);
 
 }

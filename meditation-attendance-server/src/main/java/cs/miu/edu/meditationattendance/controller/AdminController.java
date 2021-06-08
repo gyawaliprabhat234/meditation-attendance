@@ -2,6 +2,8 @@ package cs.miu.edu.meditationattendance.controller;
 
 import cs.miu.edu.meditationattendance.dto.AttendanceDTO;
 import cs.miu.edu.meditationattendance.exception.ResourceNotFoundException;
+import cs.miu.edu.meditationattendance.security.CurrentUser;
+import cs.miu.edu.meditationattendance.security.UserPrincipal;
 import cs.miu.edu.meditationattendance.service.AdminService;
 import cs.miu.edu.meditationattendance.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ public class AdminController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/assign")
-    public boolean saveAttendance(@RequestParam("userId") Long userId, String newRole) throws ResourceNotFoundException {
+    public boolean saveAttendance(@CurrentUser UserPrincipal currentUser, @RequestParam("userId") Long userId, String newRole) throws ResourceNotFoundException {
         return adminService.assignRole(userId, newRole);
     }
 }

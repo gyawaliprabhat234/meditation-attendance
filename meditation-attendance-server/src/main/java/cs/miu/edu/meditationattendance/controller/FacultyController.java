@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cs.miu.edu.meditationattendance.dto.ClassDTO;
 import cs.miu.edu.meditationattendance.dto.CourseDTO;
+import cs.miu.edu.meditationattendance.security.CurrentUser;
+import cs.miu.edu.meditationattendance.security.UserPrincipal;
 import cs.miu.edu.meditationattendance.service.CourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,14 +25,18 @@ public class FacultyController {
 	private CourseService courseService;
     
     @ApiOperation(value = "This method is used to get the courses of six months ago.")
+    @PreAuthorize("hasAuthority('FACULTY')")
     @GetMapping("/courses")
-    public List<CourseDTO> getCoursesPastSixMoths() throws Exception{
-    	return courseService.coursesPastSixMonths();
+    public List<CourseDTO> getCoursesPastSixMoths(@CurrentUser UserPrincipal currentUser) throws Exception{
+    	Long userId = currentUser.getId();
+    	return courseService.coursesPastSixMonths(userId);
     }
     
     @ApiOperation(value = "This method is used to get the attenfance per courses.")
+    @PreAuthorize("hasAuthority('FACULTY')")
     @GetMapping("/courses/attendance")
-    public List<ClassDTO> coursesWithAttendance() throws Exception{
-    	return courseService.coursesWithAttendance();
+    public List<ClassDTO> coursesWithAttendance(@CurrentUser UserPrincipal currentUser) throws Exception{
+    	Long userId = currentUser.getId();
+    	return courseService.coursesWithAttendance(userId);
     }
 }
