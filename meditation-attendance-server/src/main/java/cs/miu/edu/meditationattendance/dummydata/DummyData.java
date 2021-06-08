@@ -55,6 +55,7 @@ public class DummyData {
 
         Location location = new Location();
         location.setBuildingName("VERILL");
+        location.setRoomName("44");
         locationRepository.save(location);
 
         Faculty faculty = new Faculty();

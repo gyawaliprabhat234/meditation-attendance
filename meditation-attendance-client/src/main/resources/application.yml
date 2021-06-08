@@ -10,3 +10,12 @@ spring-boot-server.name: meditation-attendance-server
 basicAuthenConfig:
   username: username
   password: password
+
+cronJob:
+#  get-students-job: 0 30 9,13 ? * MON,TUE,WED,THU,FRI,SAT
+  getStudentsJob: 55 * * ? * *
+#  import-job: 0 30 10,14 ? * MON,TUE,WED,THU,FRI,SAT
+  importJob: 30 * * ? * *
+location:
+  bldg: VERILL
+  room: 44

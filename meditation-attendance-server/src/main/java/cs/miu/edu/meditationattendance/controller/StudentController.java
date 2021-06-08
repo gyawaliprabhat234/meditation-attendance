@@ -22,8 +22,8 @@ public class StudentController {
         return studentService.findStudentById(studentId);
     }
 
-    @GetMapping("/{bldgName}/{roomName}")
-    public List<AttendanceDTO> findAllStudentByLocation(@PathVariable("bldgName")String bldgName, @PathVariable("roomName") String roomName) throws ResourceNotFoundException {
+    @GetMapping("/session")
+    public List<AttendanceDTO> findAllStudentByLocation(@RequestParam("bldgName")String bldgName, @RequestParam("roomName") String roomName) throws ResourceNotFoundException {
         LocationDTO location = new LocationDTO(bldgName, roomName);
         return studentService.findAllStudentByLocation(location);
     }

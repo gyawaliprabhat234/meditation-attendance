@@ -21,17 +21,6 @@ public class FacultyController {
 
 	@Autowired
 	private CourseService courseService;
-
-    @GetMapping("/")
-    @PreAuthorize("hasAuthority('FACULTY')")
-    public String faculty() {
-        return "Welcome to home page1111!!";
-    }
-
-    @GetMapping("/basic")
-    public String basic() {
-        return "Welcome to home page1111!!";
-    }
     
     @ApiOperation(value = "This method is used to get the courses of six months ago.")
     @GetMapping("/courses")

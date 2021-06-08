@@ -51,7 +51,11 @@ public class StudentServiceImpl implements StudentService{
         Optional<Location> location =  locationRepository.findByBuildingNameAndRoomName(locationDTO.getBuildingName(), locationDTO.getRoomName());
         if(!location.isPresent())
             throw new ResourceNotFoundException("Location is invalid");
-        Optional<ClassSession> classSession = classSessionRepository.findClassSessionByLocationIdAndCurrentTime(location.get().getLocationId(), LocalDate.now(), LocalTime.now(), LocalTime.now().plusMinutes(30));
+        //TODO testing purpose
+        LocalDate date = LocalDate.of(2021,6,1);
+        LocalTime time = LocalTime.of(9,55);
+
+        Optional<ClassSession> classSession = classSessionRepository.findClassSessionByLocationIdAndCurrentTime(location.get().getLocationId(), date, time, time.plusMinutes(30));
         if(!classSession.isPresent())
             throw new ResourceNotFoundException("No class session is found");
         List<Student> students = studentRepository.findAllStudentBySessionId(classSession.get().getSessionId());
