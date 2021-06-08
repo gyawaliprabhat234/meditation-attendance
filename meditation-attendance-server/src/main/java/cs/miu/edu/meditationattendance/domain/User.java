@@ -25,7 +25,7 @@ public abstract class User {
     private String userName;
     private String password;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "user_id")
     private Set<Role> role = new HashSet<>();
 }
