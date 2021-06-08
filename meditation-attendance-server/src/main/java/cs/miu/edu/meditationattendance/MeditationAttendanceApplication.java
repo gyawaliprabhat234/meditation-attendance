@@ -10,7 +10,7 @@ public class MeditationAttendanceApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(MeditationAttendanceApplication.class, args);
-		DummyData data = context.getBean(DummyData.class);
-		data.createDummyData();
+//		DummyData data = context.getBean(DummyData.class);
+//		data.createDummyData();
 	}
 }
