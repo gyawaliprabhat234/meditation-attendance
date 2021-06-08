@@ -16,7 +16,7 @@ function App() {
                 setScanning(true);
             setData(barcode);
             console.log("Barcode " + barcode + " scanning " + true);
-            fetch(`/api/barcode?barCodeId=${barcode}`)
+            fetch(`/api/barcode/scan?barcode=${barcode}`)
                 .then(function (response) {
                     if (!response.ok) {
                         throw Error(response.statusText);
@@ -80,7 +80,7 @@ function App() {
                 }
                 {scanningFailed &&
                     <div width={500} height={500}>
-                        <h1>SCANNING FAILED</h1>
+                        <h1>You're not in this class</h1>
                         <p>{data}</p>
                     </div>
                 }
