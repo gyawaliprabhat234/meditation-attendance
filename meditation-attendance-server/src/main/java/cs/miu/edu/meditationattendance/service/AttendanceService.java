@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface AttendanceService {
     public List<AttendanceDTO> findAllAttendanceByStudentId(String id) throws ResourceNotFoundException;
     public AttendanceDTO saveAttendance(AttendanceDTO attendanceDTO) throws ResourceNotFoundException;

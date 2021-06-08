@@ -30,3 +30,4 @@ public class AttendanceDTO {
     private String buildingName;
     private Long barCode;
 }
+
