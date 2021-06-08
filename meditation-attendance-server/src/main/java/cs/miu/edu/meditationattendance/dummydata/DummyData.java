@@ -4,6 +4,7 @@ import cs.miu.edu.meditationattendance.domain.*;
 import cs.miu.edu.meditationattendance.repository.*;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,6 +99,8 @@ public class DummyData {
         student.setLastName("Gyawali");
         student.setStudentId("611941");
         student.setBarcode(611941l);
+        student.setUserName("student");
+        student.setPassword(new BCryptPasswordEncoder().encode("password"));
         studentRepository.save(student);
 
         CourseRegistration registration = new CourseRegistration();
