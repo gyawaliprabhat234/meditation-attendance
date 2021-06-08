@@ -2,16 +2,12 @@ package cs.miu.edu.meditationattendance.dummydata;
 
 import cs.miu.edu.meditationattendance.domain.*;
 import cs.miu.edu.meditationattendance.repository.*;
-import org.hibernate.Session;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.Registration;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -25,7 +21,7 @@ public class DummyData {
     private StudentRepository studentRepository;
 
     @Autowired
-    private AdminRepository adminRepository;
+    private AdministratorRepository adminRepository;
 
     @Autowired
     private TimeSlotRepository timeSlotRepository;

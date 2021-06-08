@@ -30,10 +30,10 @@ public class CourseServiceImpl implements CourseService {
 	private CourseOfferingRepository courseOfferingRepository;
 
 	@Transactional
-	public List<CourseDTO> coursesPastSixMonths() throws Exception {
+	public List<CourseDTO> coursesPastSixMonths(Long user) throws Exception {
 		try {
 			LocalDate date = LocalDate.now().minusMonths(6);
-			List<Course> courses = courseRepository.coursesPastSixMonths(date);
+			List<Course> courses = courseRepository.coursesPastSixMonths(date,user);
 			List<CourseDTO> coursesDto = convertCoursesDto(courses);
 			return coursesDto;
 		} catch (Exception e) {
@@ -41,9 +41,9 @@ public class CourseServiceImpl implements CourseService {
 		}
 	}
 
-	public List<ClassDTO> coursesWithAttendance() throws Exception {
+	public List<ClassDTO> coursesWithAttendance(Long user) throws Exception {
 		try {
-			List<CourseOffering> coursesOffering = courseOfferingRepository.coursesWithAttendance();
+			List<CourseOffering> coursesOffering = courseOfferingRepository.coursesWithAttendance(user);
 			List<ClassDTO> classesDto = convertClassDto(coursesOffering);
 			return classesDto;
 		} catch (Exception e) {
@@ -89,6 +89,7 @@ public class CourseServiceImpl implements CourseService {
 					attendanceObj.setStudentId(attendance.getStudent().getStudentId());
 					//attendanceObj.setUserName(attendance.getStudent().getUserName());
 					//attendanceObj.setStudent(studentDto);
+					attendances.add(attendanceObj);
 				}
 				classSessionObj.setAttendance(attendances);
 				classSessions.add(classSessionObj);
