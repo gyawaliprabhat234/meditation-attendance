@@ -25,14 +25,10 @@ public class CourseOffering {
 	private Faculty faculty;
 
 	@ManyToOne
-	@JoinColumn(name="course_id")
+	@JoinColumn(name="course_id" , nullable = false)
 	private Course course;
 	
 	@OneToMany(mappedBy="courseOffering")
-	private List<ClassSession> listClassSessions;
-
-	//Added
-	@OneToMany(mappedBy="courseOffering" , fetch = FetchType.LAZY)
 	private List<ClassSession> sessions;
 
 	public CourseOffering(Course course){
