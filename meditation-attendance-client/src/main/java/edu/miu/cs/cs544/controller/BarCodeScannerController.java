@@ -15,9 +15,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/barcode")
 class BarCodeScannerController {
-
     @Autowired
     private AttendanceServiceImpl attendanceService;
+
+    @Value("${location.room}")
+    private String room;
+
+    @Value("${location.bldg}")
+    private String building;
+
+    @GetMapping("/info")
+    public String info(){
+        return "Barcode reader in the building " + building + " room " + room;
+    }
 
     @GetMapping("/scan")
     public void checkAndUpdateAttendance(@RequestParam("barcode") Long barcode) throws ResourceNotFoundException {
@@ -37,13 +47,5 @@ class BarCodeScannerController {
     @GetMapping("/push")
     public void pushDataToServer(){
         attendanceService.importData();
-    }
-
-    @Value("${location.room}")
-    private String room;
-
-    @GetMapping("/info")
-    public String info(){
-        return room;
     }
 }
