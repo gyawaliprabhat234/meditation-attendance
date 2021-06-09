@@ -1,23 +1,17 @@
 package cs.miu.edu.meditationattendance.service;
 
-import cs.miu.edu.meditationattendance.domain.ClassSession;
-import cs.miu.edu.meditationattendance.domain.Course;
-import cs.miu.edu.meditationattendance.domain.Location;
-import cs.miu.edu.meditationattendance.domain.Student;
+import cs.miu.edu.meditationattendance.domain.*;
 import cs.miu.edu.meditationattendance.dto.AttendanceDTO;
+import cs.miu.edu.meditationattendance.dto.CourseDTO;
 import cs.miu.edu.meditationattendance.dto.LocationDTO;
 import cs.miu.edu.meditationattendance.dto.StudentDTO;
 import cs.miu.edu.meditationattendance.exception.ResourceNotFoundException;
-import cs.miu.edu.meditationattendance.repository.ClassSessionRepository;
-import cs.miu.edu.meditationattendance.repository.CourseRegistrationRepository;
-import cs.miu.edu.meditationattendance.repository.LocationRepository;
-import cs.miu.edu.meditationattendance.repository.StudentRepository;
+import cs.miu.edu.meditationattendance.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +32,12 @@ public class StudentServiceImpl implements StudentService{
     @Autowired
     private LocationRepository locationRepository;
 
+    @Autowired
+    private CourseRepository courseRepository;
+
+    @Autowired
+    private AttendanceRepository attendanceRepository;
+
     @Override
     @Transactional
     public StudentDTO findStudentById(String studentId) throws ResourceNotFoundException {
@@ -47,6 +47,7 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
+    @Transactional
     public List<AttendanceDTO> findAllStudentByLocation(LocationDTO locationDTO) throws ResourceNotFoundException {
         Optional<Location> location =  locationRepository.findByBuildingNameAndRoomName(locationDTO.getBuildingName(), locationDTO.getRoomName());
         if(!location.isPresent())
@@ -66,6 +67,26 @@ public class StudentServiceImpl implements StudentService{
             return attendanceDTO;
         }).collect(Collectors.toList());
         return attendanceDTOS;
+    }
+    @Transactional
+    public List<AttendanceDTO> findAllAttendanceByCourseNumber(String courseNumber,String studentId) throws ResourceNotFoundException {
+        Optional<Course> course = courseRepository.findCourseByCourseNumber(courseNumber);
+        if(!course.isPresent())
+            throw new ResourceNotFoundException("Course not found");
+        List<Attendance> attendances = attendanceRepository.findAllAttendanceByCourseNumber(courseNumber, studentId);
+        return attendances.stream().map(attendance -> mapToAttendanceDTO(attendance)).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<CourseDTO> findAllCoursesByStudentId(String studentId) {
+        Optional<Course> courses = courseRegistrationRepository.findCoursesByStudentId(studentId);
+        return courses.stream().map(course -> mapToCourseDTO(course)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Student findStudentByUserId(Long id) {
+        return studentRepository.findById(id).get();
+
     }
 
     public Optional<Course> findCurrentCourseByStudentId(String studentId , LocalDate date){
@@ -87,4 +108,32 @@ public class StudentServiceImpl implements StudentService{
         }
         return studentDTO;
     }
+    private AttendanceDTO mapToAttendanceDTO(Attendance attendance) {
+        Student student = attendance.getStudent();
+        CourseOffering courseOffering = attendance.getClassSession().getCourseOffering();
+        AttendanceDTO attendanceDTO = new AttendanceDTO();
+        attendanceDTO.setId(attendance.getId());
+        attendanceDTO.setSessionId(attendance.getClassSession().getSessionId());
+        attendanceDTO.setStudentId(student.getStudentId());
+        attendanceDTO.setFirstName((student.getFirstName()));
+        attendanceDTO.setLastName((student.getLastName()));
+        attendanceDTO.setBarCode(student.getBarcode());
+        attendanceDTO.setTimeStamp(attendance.getTimeStamp());
+        attendanceDTO.setTimeSlotCode(attendance.getClassSession().getTimeslot().getCode());
+        attendanceDTO.setCourseEndDate(courseOffering.getEndDate());
+        attendanceDTO.setCourseStartDate(courseOffering.getStartDate());
+        attendanceDTO.setCourseName(courseOffering.getCourse().getName());
+        return attendanceDTO;
+    }
+
+    private CourseDTO mapToCourseDTO(Course course){
+        CourseDTO courseDTO = new CourseDTO();
+        courseDTO.setCourseNumber(course.getCourseNumber());
+        courseDTO.setName(course.getName());
+        courseDTO.setDescription(course.getDescription());
+
+        return courseDTO;
+    }
+
+
 }

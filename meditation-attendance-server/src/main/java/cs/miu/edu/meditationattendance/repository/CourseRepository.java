@@ -2,6 +2,7 @@ package cs.miu.edu.meditationattendance.repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -16,4 +17,6 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 			+ "CourseOffering co where co.startDate >= ?1 and co.faculty.id = ?2)")
 	public List<Course> coursesPastSixMonths(LocalDate date, Long idFaculty);
 
+	@Query("select c from Course c where c.courseNumber = ?1 ")
+    Optional<Course> findCourseByCourseNumber(String courseNumber);
 }

@@ -68,6 +68,8 @@ public class DummyData {
 
         Course ea = new Course();
         ea.setCourseNumber("CS544");
+        ea.setDescription("Designing of Enterprise Architecture software for big corporations");
+        ea.setName("Enterprise Architecture");
 
         Course mwa = new Course();
         mwa.setCourseNumber("MWA");
