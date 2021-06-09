@@ -1,3 +1,5 @@
+server:
+  port: 8090
 jwt:
     secret: secretKey123
     jwtExpirationInMs: 3000000

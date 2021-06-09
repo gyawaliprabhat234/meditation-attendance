@@ -38,7 +38,7 @@ public class StudentController {
     @GetMapping("/attendances/{courseNumber}")
     public List<AttendanceDTO> findAllAttendanceByCourseNumber(@CurrentUser UserPrincipal userPrincipal, @PathVariable("courseNumber") String courseNumber) throws ResourceNotFoundException {
 
-    String studentId = studentService.findStudentObjById(userPrincipal.getId()).getStudentId();
+    String studentId = studentService.findStudentByUserId(userPrincipal.getId()).getStudentId();
         return studentService.findAllAttendanceByCourseNumber(courseNumber, studentId);
     }
     @ApiOperation(value = "This method is used to get all the courses in which a student is registered in")
