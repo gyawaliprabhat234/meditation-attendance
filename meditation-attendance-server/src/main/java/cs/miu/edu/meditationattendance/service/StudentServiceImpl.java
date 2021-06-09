@@ -79,7 +79,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Transactional
     public List<CourseDTO> findAllCoursesByStudentId(String studentId) {
-        Optional<Course> courses = courseRegistrationRepository.findCoursesByStudentId(studentId);
+        List<Course> courses = courseRegistrationRepository.findCoursesByStudentId(studentId);
         return courses.stream().map(course -> mapToCourseDTO(course)).collect(Collectors.toList());
     }
 

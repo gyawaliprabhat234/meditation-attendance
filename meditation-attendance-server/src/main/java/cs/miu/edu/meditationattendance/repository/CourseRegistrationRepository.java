@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -31,5 +32,5 @@ public interface CourseRegistrationRepository extends JpaRepository<CourseRegist
 
     "where cr.student.studentId = ?1")
 //    @Query("select distinct co.course from CourseRegistration cr join cr.courseOffering co where cr.student.studentId = ?1")
-    Optional<Course> findCoursesByStudentId(String studentId);
+    List<Course> findCoursesByStudentId(String studentId);
 }
