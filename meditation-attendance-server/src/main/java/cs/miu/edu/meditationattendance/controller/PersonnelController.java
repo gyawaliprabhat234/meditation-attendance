@@ -7,6 +7,7 @@ import cs.miu.edu.meditationattendance.service.AttendanceService;
 import cs.miu.edu.meditationattendance.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,31 +22,33 @@ public class PersonnelController {
     @Autowired
     private AttendanceService attendanceService;
 
+    @PreAuthorize("hasAuthority('PERSONNEL') OR hasAuthority('ADMIN')")
     @GetMapping("/students/{id}")
     public StudentDTO findStudentById(@PathVariable("id") String studentId) throws ResourceNotFoundException {
         return studentService.findStudentById(studentId);
     }
 
-
-    //   @PreAuthorize("hasAuthority('PERe')")
-    @GetMapping("/{id}/all")
+    @PreAuthorize("hasAuthority('PERSONNEL')")
+    @GetMapping("students/{id}/attendances")
     public List<AttendanceDTO> findAllAttendanceByStudentId(@PathVariable String id) throws ResourceNotFoundException {
         return attendanceService.findAllAttendanceByStudentId(id);
     }
 
-    //    @PreAuthorize("hasAuthority('FACULTY')")
+    @PreAuthorize("hasAuthority('PERSONNEL') OR hasAuthority('ADMIN')")
     @PostMapping("/save")
     public AttendanceDTO saveAttendance(@RequestBody AttendanceDTO attendanceDTO) throws ResourceNotFoundException {
         return attendanceService.saveAttendance(attendanceDTO);
     }
 
-    @PostMapping("/{attendanceId}/update")
+    @PreAuthorize("hasAuthority('PERSONNEL') OR hasAuthority('ADMIN')")
+    @PostMapping("/attendances/{attendanceId}/update")
     public AttendanceDTO updateAttendance(@PathVariable Long attendanceId, @RequestBody AttendanceDTO attendanceDTO) throws ResourceNotFoundException {
         attendanceDTO.setId(attendanceId);
         return attendanceService.updateAttendance(attendanceDTO);
     }
 
-    @DeleteMapping("/{id}/delete")
+    @PreAuthorize("hasAuthority('PERSONNEL') OR hasAuthority('ADMIN')")
+    @DeleteMapping("/attendances/{id}/delete")
     public boolean deleteAttendance(@PathVariable Long id) throws ResourceNotFoundException {
         return attendanceService.deleteAttendance(id);
     }

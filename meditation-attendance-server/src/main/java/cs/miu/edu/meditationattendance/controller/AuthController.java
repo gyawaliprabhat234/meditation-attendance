@@ -17,19 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HomeController {
+public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
     private JwtTokenProvider tokenProvider;
-
-
-    @GetMapping("/")
-    public String home() {
-       // DummyData dummyData = new DummyData();
-        return "Welcome to home page!!";
-    }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) throws Exception {

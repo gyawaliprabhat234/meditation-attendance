@@ -76,16 +76,4 @@ class PersonnelControllerTest {
 
     }
 
-    @Test
-    void findAllAttendanceByStudentId() {
-
-    }
-
-    @Test
-    void saveAttendance() {
-    }
-
-    @Test
-    void deleteAttendance() {
-    }
 }

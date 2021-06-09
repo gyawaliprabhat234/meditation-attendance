@@ -17,13 +17,18 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -57,7 +62,7 @@ class AttendanceServiceTest {
         student.setId(123l);
         student.setFirstName("Prabhat");
         student.setLastName("Gyawali");
-        student.setStudentId("611941");
+        student.setStudentId("000-61-1941");
         student.setBarcode(611941l);
         currentTime = LocalDateTime.now();
 
@@ -84,6 +89,7 @@ class AttendanceServiceTest {
         attendance.setClassSession(session);
 
         returnSavedAttendance = new Attendance();
+        returnSavedAttendance.setId(123l);
         returnSavedAttendance.setTimeStamp(currentTime);
         returnSavedAttendance.setBarCode(611941l);
         returnSavedAttendance.setStudent(student);
@@ -97,7 +103,18 @@ class AttendanceServiceTest {
     }
 
     @Test
-    void findAllAttendanceByStudentId() {
+    void when_findAllAttendanceByStudentId_invoked_it_should_return_returnSavedAttendance() throws ResourceNotFoundException {
+        Mockito.when(attendanceRepository.findAllAttendanceByStudentId("000-61-1941")).thenReturn(Arrays.asList(returnSavedAttendance));
+        List<AttendanceDTO> attendanceDTOList = attendanceService.findAllAttendanceByStudentId("000-61-1941");
+        Assertions.assertThat(attendanceDTOList.size()).isEqualTo(1);
+        assertThat(attendanceDTOList.get(0).getId()).isEqualTo(123l);
+        assertThat(attendanceDTOList.get(0).getStudentId()).isEqualTo("000-61-1941");
+    }
+
+    @Test
+    void when_findAllAttendanceByStudentId_invoked_it_should_throw_ResourceNotFoundException() throws ResourceNotFoundException {
+        Mockito.when(attendanceRepository.findAllAttendanceByStudentId("000-61-1941")).thenReturn(Arrays.asList(returnSavedAttendance));
+        assertThatThrownBy(()-> attendanceService.findAllAttendanceByStudentId("000-61-1942")).isInstanceOf(ResourceNotFoundException.class);
     }
 
     @Test
@@ -109,12 +126,12 @@ class AttendanceServiceTest {
         AttendanceDTO savedAttendanceDTO = attendanceService.saveAttendance(attendanceDTO);
         Mockito.verify(attendanceRepository, Mockito.times(1))
                 .save(attendanceArgumentCaptor.capture());
-        Assertions.assertThat(attendanceArgumentCaptor.getValue().getBarCode()).isEqualTo(611941l);
-        Assertions.assertThat(attendanceArgumentCaptor.getValue().getBarCode()).isEqualTo(savedAttendanceDTO.getBarCode());
+        assertThat(attendanceArgumentCaptor.getValue().getBarCode()).isEqualTo(611941l);
+        assertThat(attendanceArgumentCaptor.getValue().getBarCode()).isEqualTo(savedAttendanceDTO.getBarCode());
     }
 
     @Test
-    void when_aveAttendance_is_called_with_no_existing_barcode_should_throw_exception() throws ResourceNotFoundException {
+    void when_saveAttendance_is_called_with_no_existing_barcode_should_throw_exception() throws ResourceNotFoundException {
 
         Mockito.when(studentRepository.findByBarcode(611942l)).thenReturn(Optional.of(student));
         Mockito.when(classSessionRepository.findById(234l)).thenReturn((Optional.of(session)));
@@ -125,7 +142,19 @@ class AttendanceServiceTest {
 
     }
 
+    @Transactional
+    public boolean deleteAttendance(Long id) throws ResourceNotFoundException {
+        Optional<Attendance> attendance = attendanceRepository.findById(id);
+        if (!attendance.isPresent())
+            throw new ResourceNotFoundException("Attendance Not Found");
+        attendanceRepository.delete(attendance.get());
+        return true;
+    }
     @Test
-    void deleteAttendance() {
+    void when_deleteAttendance_invoked_with_fake_attendanceId_then_it_throw_ResourceNotFoundException() {
+        Mockito.when(attendanceRepository.findById(123l)).thenReturn(Optional.of(returnSavedAttendance));
+        assertThatThrownBy(()-> attendanceService.deleteAttendance(124l)).isInstanceOf(ResourceNotFoundException.class);
+        Mockito.verify(attendanceRepository, Mockito.never())
+                .delete(attendanceArgumentCaptor.capture());
     }
 }

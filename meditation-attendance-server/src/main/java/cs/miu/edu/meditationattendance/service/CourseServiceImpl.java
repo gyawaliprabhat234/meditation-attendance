@@ -72,7 +72,7 @@ public class CourseServiceImpl implements CourseService {
 			classObj.setCourseName(courseOffering.getCourse().getName());
 			List<ClassSessionDto> classSessions = new ArrayList<ClassSessionDto>();
 			ClassSessionDto classSessionObj;
-			for (ClassSession classSession : courseOffering.getListClassSessions()) {
+			for (ClassSession classSession : courseOffering.getSessions()) {
 				classSessionObj = new ClassSessionDto();
 				classSessionObj.setTimeSlot(classSession.getTimeslot());
 				List<AttendanceDTO> attendances = new ArrayList<AttendanceDTO>();
