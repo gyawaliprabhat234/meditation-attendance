@@ -119,6 +119,18 @@ public class DummyData {
         student.setPassword(bCryptPasswordEncoder.encode("password"));
         studentRepository.save(student);
 
+        Attendance attendance1 = new Attendance();
+        attendance1.setStudent(student);
+        attendance1.setTimeStamp(LocalDateTime.now());
+        attendance1.setClassSession(session);
+        attendanceRepository.save(attendance1);
+
+        Attendance attendance2 = new Attendance();
+        attendance2.setStudent(student);
+        attendance2.setTimeStamp(LocalDateTime.now());
+        attendance2.setClassSession(session2);
+        attendanceRepository.save(attendance2);
+
         CourseRegistration registration = new CourseRegistration();
         registration.setRegistrationDateTime(LocalDateTime.now());
         registration.setCourseOffering(eaOffering);
