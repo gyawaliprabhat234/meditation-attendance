@@ -130,7 +130,7 @@ public class DummyData {
         student.setLastName("Trinh");
         student.setStudentId("612339");
         student.setBarcode(612339l);
-        student.setUserName("student");
+        student.setUserName("student1");
         student.setRole(createRole("STUDENT"));
         student.setPassword(bCryptPasswordEncoder.encode("password"));
         studentRepository.save(student);
