@@ -23,6 +23,6 @@ spring:
         dialect: org.hibernate.dialect.SQLServer2008Dialect
 
 basicAuthenConfig:
-  urlPattern: /attendances/session,attendances/saveAll
+  urlPattern: /attendances/**
   username: username
   password: password

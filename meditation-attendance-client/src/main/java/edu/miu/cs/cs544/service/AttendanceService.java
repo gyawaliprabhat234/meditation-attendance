@@ -12,6 +12,8 @@ public interface AttendanceService {
 
 	List<AttendanceDTO> readDataInLocal();
 
+	boolean deleteJson();
+
 	void checkAndUpdateAttendance(Long baCode) throws ResourceNotFoundException;
 
 	void importData();

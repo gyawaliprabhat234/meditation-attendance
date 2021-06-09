@@ -24,7 +24,7 @@ import java.util.Optional;
 @Log4j2
 public class AttendanceServiceImpl implements AttendanceService{
 
-	public static final String VAR_TMP_DATA_JSON = "/var/tmp/data.json";
+	public static final String VAR_TMP_DATA_JSON = "/var/tmp/";
 	@Autowired
 	private DiscoveryClient discoveryClient;
 
@@ -80,7 +80,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 
 	private List<AttendanceDTO> readDataFromJson() {
-		File file = new File(VAR_TMP_DATA_JSON);
+		File file = new File(VAR_TMP_DATA_JSON + "data" +roomName+ ".json");
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<AttendanceDTO> attendanceDTOS = new ArrayList<>();
 		try {
@@ -94,16 +94,25 @@ public class AttendanceServiceImpl implements AttendanceService{
 	private void saveToJson(AttendanceDTO[] forObject) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-			File convertFile = new File(VAR_TMP_DATA_JSON);
+			File convertFile = new File(VAR_TMP_DATA_JSON  + "data" +roomName+ ".json");
 			if (convertFile.exists()) {
 				convertFile.delete();
 			}
 			convertFile.createNewFile();
 			FileOutputStream fout = new FileOutputStream(convertFile);
 			objectMapper.writeValue(fout, forObject);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			log.error("Cannot write data to file", e);
 		}
+	}
+
+	@Override
+	public boolean deleteJson() {
+		File convertFile = new File(VAR_TMP_DATA_JSON  + "data" +roomName+ ".json");
+		if (convertFile.exists()) {
+			convertFile.delete();
+		}
+		return true;
 	}
 
 	private String getBaseServiceUrl() {
