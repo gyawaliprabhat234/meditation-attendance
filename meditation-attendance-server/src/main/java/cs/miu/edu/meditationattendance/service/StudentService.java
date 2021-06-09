@@ -8,6 +8,7 @@ import cs.miu.edu.meditationattendance.dto.StudentDTO;
 import cs.miu.edu.meditationattendance.exception.ResourceNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StudentService {
     public StudentDTO findStudentById(String studentId) throws ResourceNotFoundException;
@@ -18,5 +19,5 @@ public interface StudentService {
 
     List<CourseDTO> findAllCoursesByStudentId(String studentId);
 
-    Student findStudentObjById(Long id);
+    Student findStudentByUserId(Long id);
 }

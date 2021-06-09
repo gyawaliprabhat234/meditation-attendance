@@ -20,5 +20,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             "inner join offering.sessions session " +
             "where session.sessionId = ?1")
     List<Student> findAllStudentBySessionId(Long sessionId);
-    Student findStudentById(Long id);
+
+    Optional<Student> findById(Long id);
 }

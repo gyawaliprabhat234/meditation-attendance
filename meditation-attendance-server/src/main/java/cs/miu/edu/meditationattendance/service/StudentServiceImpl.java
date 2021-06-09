@@ -84,8 +84,9 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student findStudentObjById(Long id) {
-        return studentRepository.findStudentById(id);
+    public Student findStudentByUserId(Long id) {
+        return studentRepository.findById(id).get();
+
     }
 
     public Optional<Course> findCurrentCourseByStudentId(String studentId , LocalDate date){
