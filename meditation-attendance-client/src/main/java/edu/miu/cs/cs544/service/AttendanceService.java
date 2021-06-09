@@ -10,7 +10,9 @@ import java.util.List;
 public interface AttendanceService {
 	List<AttendanceDTO> getSessions();
 
-	List<AttendanceDTO> update(Long baCode) throws ResourceNotFoundException;
+	List<AttendanceDTO> readDataInLocal();
+
+	void checkAndUpdateAttendance(Long baCode) throws ResourceNotFoundException;
 
 	void importData();
 }

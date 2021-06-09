@@ -16,14 +16,14 @@ public class JobService {
     @Scheduled(cron = "${cronJob.getStudentsJob}")
     public void getStudents(){
         log.info("Job: getStudents started");
-        attendanceService.getSessions();
+        //attendanceService.getSessions();
         log.info("Job: getStudents finished");
     }
 
     @Scheduled(cron = "${cronJob.importJob}")
     public void importAttendance(){
         log.info("Job: importAttendance started");
-        attendanceService.importData();
+        //attendanceService.importData();
         log.info("Job: importAttendance finished");
     }
 }

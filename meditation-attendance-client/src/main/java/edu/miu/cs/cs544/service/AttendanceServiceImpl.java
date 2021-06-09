@@ -42,40 +42,44 @@ public class AttendanceServiceImpl implements AttendanceService{
 
 	@Override
 	public List<AttendanceDTO> getSessions() {
-		String url = getBaseServiceUrl() + "/students/session?bldgName=" + buildingName + "&roomName=" +roomName;
+		String url = getBaseServiceUrl() + "/attendances/session?bldgName=" + buildingName + "&roomName=" +roomName;
 		AttendanceDTO[] forObject = restTemplate.getForObject(url, AttendanceDTO[].class);
-		save(forObject);
-		return readData();
+		saveToJson(forObject);
+		return readDataFromJson();
 	}
 
 	@Override
-	public List<AttendanceDTO> update(Long baCode) throws ResourceNotFoundException {
+	public List<AttendanceDTO> readDataInLocal() {
+		return readDataFromJson();
+	}
+
+	@Override
+	public void checkAndUpdateAttendance(Long baCode) throws ResourceNotFoundException {
 		updateBarcodeToFile(baCode);
-		return readData();
 	}
 
 	@Override
 	public void importData() {
-		String url = getBaseServiceUrl() + "/attendance/saveAll";
-		List<AttendanceDTO> attendanceDTOS = readData();
+		String url = getBaseServiceUrl() + "/attendances/saveAll";
+		List<AttendanceDTO> attendanceDTOS = readDataFromJson();
 		Boolean result = restTemplate.postForObject(url, attendanceDTOS, Boolean.class);
 		log.info("Save attendance : " + (result ? "sucess" : "falied"));
 	}
 
 	private void updateBarcodeToFile(Long baCode) throws ResourceNotFoundException {
-			List<AttendanceDTO> attendanceDTOS = readData();
+			List<AttendanceDTO> attendanceDTOS = readDataFromJson();
 			Optional<AttendanceDTO> att = attendanceDTOS.stream().filter(attendance -> baCode.equals(attendance.getBarCode()))
 					.findAny();
 			if (att.isPresent()){
 				att.ifPresent(a->a.setTimeStamp(LocalDateTime.now()));
 				AttendanceDTO[] forObject = attendanceDTOS.toArray(new AttendanceDTO[attendanceDTOS.size()]);
-				save(forObject);
+				saveToJson(forObject);
 			} else{
 				throw new ResourceNotFoundException("Student is not in this class");
 			}
 	}
 
-	private List<AttendanceDTO> readData() {
+	private List<AttendanceDTO> readDataFromJson() {
 		File file = new File(VAR_TMP_DATA_JSON);
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<AttendanceDTO> attendanceDTOS = new ArrayList<>();
@@ -87,7 +91,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 		return attendanceDTOS;
 	}
 
-	private void save(AttendanceDTO[] forObject) {
+	private void saveToJson(AttendanceDTO[] forObject) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			File convertFile = new File(VAR_TMP_DATA_JSON);

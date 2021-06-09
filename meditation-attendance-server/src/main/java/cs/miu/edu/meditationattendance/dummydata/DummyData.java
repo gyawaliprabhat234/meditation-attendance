@@ -125,17 +125,21 @@ public class DummyData {
         registration.setStudent(student);
         courseRegistrationRepository.save(registration);
 
-        Attendance attendance1 = new Attendance();
-        attendance1.setStudent(student);
-        attendance1.setTimeStamp(LocalDateTime.now());
-        attendance1.setClassSession(session);
-        attendanceRepository.save(attendance1);
+        student = new Student();
+        student.setFirstName("Hoang");
+        student.setLastName("Trinh");
+        student.setStudentId("612339");
+        student.setBarcode(612339l);
+        student.setUserName("student");
+        student.setRole(createRole("STUDENT"));
+        student.setPassword(bCryptPasswordEncoder.encode("password"));
+        studentRepository.save(student);
 
-        Attendance attendance2 = new Attendance();
-        attendance2.setStudent(student);
-        attendance2.setTimeStamp(LocalDateTime.now());
-        attendance2.setClassSession(session2);
-        attendanceRepository.save(attendance2);
+        registration = new CourseRegistration();
+        registration.setRegistrationDateTime(LocalDateTime.now());
+        registration.setCourseOffering(eaOffering);
+        registration.setStudent(student);
+        courseRegistrationRepository.save(registration);
 
     }
 
