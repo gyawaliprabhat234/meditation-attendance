@@ -2,8 +2,7 @@ package cs.miu.edu.meditationattendance.controller;
 
 import cs.miu.edu.meditationattendance.config.SecurityConfig;
 import cs.miu.edu.meditationattendance.dto.StudentDTO;
-import cs.miu.edu.meditationattendance.exception.ResourceNotFoundException;
-import cs.miu.edu.meditationattendance.security.CustomUserDetailsService;
+import cs.miu.edu.meditationattendance.security.UserDetailsServiceImpl;
 import cs.miu.edu.meditationattendance.security.JwtAuthenticationEntryPoint;
 import cs.miu.edu.meditationattendance.security.JwtTokenProvider;
 import cs.miu.edu.meditationattendance.service.AttendanceService;
@@ -11,18 +10,14 @@ import cs.miu.edu.meditationattendance.service.StudentService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -36,7 +31,7 @@ class PersonnelControllerTest {
     private AttendanceService attendanceService;
 
     @MockBean
-    private CustomUserDetailsService customUserDetailsService;
+    private UserDetailsServiceImpl userDetailsServiceImpl;
 
     @MockBean
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;

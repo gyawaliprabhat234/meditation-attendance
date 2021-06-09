@@ -1,6 +1,6 @@
 package cs.miu.edu.meditationattendance.config;
 
-import cs.miu.edu.meditationattendance.security.CustomUserDetailsService;
+import cs.miu.edu.meditationattendance.security.UserDetailsServiceImpl;
 import cs.miu.edu.meditationattendance.security.JwtAuthenticationEntryPoint;
 import cs.miu.edu.meditationattendance.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +66,7 @@ public class SecurityConfig{
 	@Order(2)
 	public class JWTAuthSecurityConfig extends WebSecurityConfigurerAdapter {
 		@Autowired
-		private CustomUserDetailsService customUserDetailsService;
+		private UserDetailsServiceImpl userDetailsServiceImpl;
 
 		@Autowired
 		private JwtAuthenticationEntryPoint unauthorizedHandler;
@@ -79,7 +79,7 @@ public class SecurityConfig{
 		@Override
 		public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 			authenticationManagerBuilder
-					.userDetailsService(customUserDetailsService)
+					.userDetailsService(userDetailsServiceImpl)
 					.passwordEncoder(passwordEncoder());
 		}
 
