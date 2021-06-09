@@ -104,9 +104,11 @@ public class AttendanceServiceImpl implements AttendanceService {
         CourseOffering courseOffering = attendance.getClassSession().getCourseOffering();
         AttendanceDTO attendanceDTO = new AttendanceDTO();
         attendanceDTO.setId(attendance.getId());
+        attendanceDTO.setEmailAddress(student.getEmailAddress());
         attendanceDTO.setSessionId(attendance.getClassSession().getSessionId());
         attendanceDTO.setStudentId(student.getStudentId());
-        attendanceDTO.setStudentName(student.getFirstName() + " " + student.getLastName());
+        attendanceDTO.setFirstName(student.getFirstName());
+        attendanceDTO.setLastName(student.getLastName());
         attendanceDTO.setBarCode(student.getBarcode());
         attendanceDTO.setTimeStamp(attendance.getTimeStamp());
         attendanceDTO.setTimeSlotCode(attendance.getClassSession().getTimeslot().getCode());

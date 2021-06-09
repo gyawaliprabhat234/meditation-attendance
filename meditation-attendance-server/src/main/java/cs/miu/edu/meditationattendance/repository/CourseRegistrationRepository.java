@@ -18,8 +18,8 @@ import java.util.Optional;
 public interface CourseRegistrationRepository extends JpaRepository<CourseRegistration, Long> {
 
     @Query("select course from CourseRegistration cr " +
-                "inner join cr.courseOffering co " +
-                "inner join co.course course " +
+                "join cr.courseOffering co " +
+                "join co.course course " +
 //                 "inner join cr.student s" +
                     "where cr.student.studentId = ?1 " +
                     "and co.startDate <= ?2 " +

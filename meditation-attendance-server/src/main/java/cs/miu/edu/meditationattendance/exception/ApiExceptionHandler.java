@@ -25,6 +25,12 @@ public class ApiExceptionHandler
         return new ResponseEntity<>(apiException, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(value = {NotHandledException.class})
+    public ResponseEntity<ApiException> NotHandledException(NotHandledException exception) {
+        ApiException apiException = new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(apiException, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 //   @ExceptionHandler(value={NoHandlerFoundException.class})
 //    public ResponseEntity<ApiException> handleNoHandlerFoundExceptionEx(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 ////        Map<String,String> responseBody = new HashMap<>();

@@ -15,9 +15,9 @@ Insert into Role values(4, 'FACULTY',103);
 Insert into Faculty(title, id) values ('title goes here', 111);
 
 Insert into Student (id, entryDateTime, status, barcode,studentId) values (101, '2021-02-01','F1', 611941, '000-61-1941');
-Insert into Student (id, entryDateTime, status, barcode,studentId) values (102, '2021-05-01','F1', 611942, '611942');
-Insert into Student (id, entryDateTime, status, barcode,studentId) values (103, '2021-02-01','F1', 611943, '611943');
-Insert into Student (id, entryDateTime, status, barcode,studentId) values(104, '2021-02-01','F1', 611944, '611944');
+Insert into Student (id, entryDateTime, status, barcode,studentId) values (102, '2021-05-01','F1', 611942, '000-61-1942');
+Insert into Student (id, entryDateTime, status, barcode,studentId) values (103, '2021-02-01','F1', 611943, '000-61-1943');
+Insert into Student (id, entryDateTime, status, barcode,studentId) values(104, '2021-02-01','F1', 611944, '000-61-1944');
 
 Insert into Course (id, courseNumber, description, name) values (11, 'CS545', 'Enterprise Architecture', 'EA');
 Insert into Course (id, courseNumber, description, name) values (12, 'CS435', 'Algorithm', 'Algorithm');

@@ -99,12 +99,15 @@ public class StudentServiceImpl implements StudentService{
         studentDTO.setStudentId(student.getStudentId());
         studentDTO.setFirstName(student.getFirstName());
         studentDTO.setLastName(student.getLastName());
+        studentDTO.setBarcode(student.getBarcode());
+        studentDTO.setId(student.getId());
+        studentDTO.setUserName(student.getUserName());
         studentDTO.setStatus(student.getStatus());
         studentDTO.setEmailAddress(student.getEmailAddress());
         studentDTO.setEntryDateTime(student.getEntryDateTime());
         Optional<Course> currentCourse = this.findCurrentCourseByStudentId(student.getStudentId(), LocalDate.now());
         if(currentCourse.isPresent()) {
-            studentDTO.setCurrentCourse(currentCourse.get().getCourseNumber());
+            studentDTO.setCurrentCourse(currentCourse.get().getName());
         }
         return studentDTO;
     }

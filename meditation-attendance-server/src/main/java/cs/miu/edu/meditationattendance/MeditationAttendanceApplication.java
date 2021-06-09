@@ -10,10 +10,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class MeditationAttendanceApplication {
 
 	public static void main(String[] args) {
-//		String pass = new BCryptPasswordEncoder().encode("123456");
-//		System.out.println("pass: " + pass);
+		String pass = new BCryptPasswordEncoder().encode("123456");
+		System.out.println("pass: " + pass);
 		ApplicationContext context = SpringApplication.run(MeditationAttendanceApplication.class, args);
-		DummyData data = context.getBean(DummyData.class);
-		data.createDummyData();
+//		DummyData data = context.getBean(DummyData.class);
+//		data.createDummyData();
 	}
 }

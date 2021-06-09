@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class StudentDTO {
     private String studentId;
-    private String id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String currentCourse;

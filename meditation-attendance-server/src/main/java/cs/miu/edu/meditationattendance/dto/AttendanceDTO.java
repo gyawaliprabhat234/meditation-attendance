@@ -16,7 +16,6 @@ import java.time.LocalTime;
 public class AttendanceDTO {
     private Long id;
     private String studentId;
-    private String studentName;
     private String firstName;
     private String lastName;
     private String courseName;
