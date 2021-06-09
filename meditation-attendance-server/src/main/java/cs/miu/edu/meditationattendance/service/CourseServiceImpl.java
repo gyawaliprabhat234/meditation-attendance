@@ -19,8 +19,10 @@ import cs.miu.edu.meditationattendance.dto.ClassSessionDto;
 import cs.miu.edu.meditationattendance.dto.CourseDTO;
 import cs.miu.edu.meditationattendance.repository.CourseOfferingRepository;
 import cs.miu.edu.meditationattendance.repository.CourseRepository;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class CourseServiceImpl implements CourseService {
 
 	@Autowired
@@ -40,7 +42,8 @@ public class CourseServiceImpl implements CourseService {
 			throw new Exception("Exception: " + e);
 		}
 	}
-
+	
+	@Transactional
 	public List<ClassDTO> coursesWithAttendance(Long user) throws Exception {
 		try {
 			List<CourseOffering> coursesOffering = courseOfferingRepository.coursesWithAttendance(user);
