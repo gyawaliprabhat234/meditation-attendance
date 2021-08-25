@@ -142,14 +142,6 @@ class AttendanceServiceTest {
 
     }
 
-    @Transactional
-    public boolean deleteAttendance(Long id) throws ResourceNotFoundException {
-        Optional<Attendance> attendance = attendanceRepository.findById(id);
-        if (!attendance.isPresent())
-            throw new ResourceNotFoundException("Attendance Not Found");
-        attendanceRepository.delete(attendance.get());
-        return true;
-    }
     @Test
     void when_deleteAttendance_invoked_with_fake_attendanceId_then_it_throw_ResourceNotFoundException() {
         Mockito.when(attendanceRepository.findById(123l)).thenReturn(Optional.of(returnSavedAttendance));
